@@ -60,6 +60,9 @@ class JsonDB:
         rows = create._getRows()
         values = create._getValues()
 
+        if len(rows) != len(values):
+            raise Exception(f"The number of rows is {len(rows)} and the number of values is {len(values)}. They need to be equal, check Create().rows() and Create().values()")
+
         if not table:
             raise Exception("You have not created a table.")
         

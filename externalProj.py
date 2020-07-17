@@ -1,10 +1,10 @@
 from JsonDB import JsonDB, Create, New, Find
 
-# newDB = New("My First DB")
+# newDB = New("ReAnime")
 # DB = JsonDB(newDB)
 
-# foundDb = Find("My First DB")
-# DB = JsonDB(foundDb)
+foundDb = Find("ReAnime")
+DB = JsonDB(foundDb)
 
 # creator = Create()
 # creator.table("First Table")
