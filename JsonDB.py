@@ -200,7 +200,7 @@ class JsonDB:
 
 
     # This method is used to find a record
-    def find(self, Row: str, Value: str):
+    def where(self, Row: str, Value: str):
         for Index in self.__selectedIndex:
             if self.__selectedTableValues[Index][Row] == Value:
                 self.__selectedIndex.clear()
