@@ -150,6 +150,7 @@ class JsonDB:
         return listOfResults
 
 
+    # This method is used to create a new row in a selected table
     def new(self, Row: str,Value: str):
         listOfRows = self.__database._getTableAndRows()[self.__selectedTable]
 
@@ -161,6 +162,7 @@ class JsonDB:
         self.__newValues.append(Value)
 
 
+    # This method is used to save the new row
     def flush(self):
         listOfRows = self.__database._getTableAndRows()[self.__selectedTable]
 
@@ -174,6 +176,7 @@ class JsonDB:
         self.__save()
 
 
+    # This method is used to set a value which should be unique
     def unique(self, Row: str):
         self.__newUnique = Row
 
