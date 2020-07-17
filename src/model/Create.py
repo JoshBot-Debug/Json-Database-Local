@@ -7,30 +7,30 @@ class Create(JsonDBInterface,CreateInterface):
 
 
     def __init__(self):
-        self.tableName = False
-        self.rowsList = False
-        self.valueList = False
+        self.__tableName = False
+        self.__rowsList = False
+        self.__valueList = False
 
 
     def table(self,Name: str):
-        self.tableName = Name
+        self.__tableName = Name
 
 
     def rows(self,Rows: list):
-        self.rowsList = Rows
+        self.__rowsList = Rows
 
     
-    def values(self,Rows: list):
-        self.valueList = Rows
+    def values(self,Values: list):
+        self.__valueList = Values
 
 
     def _getTable(self):
-        return self.tableName
+        return self.__tableName
 
 
     def _getRows(self):
-        return self.rowsList
+        return self.__rowsList
 
 
     def _getValues(self):
-        return self.valueList
+        return self.__valueList

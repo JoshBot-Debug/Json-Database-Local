@@ -22,9 +22,9 @@ class Find(JsonDBInterface,FindInterface):
 
         # Open the .db file and unpickle it
         with open(dbFileName,"rb") as db:
-            self.Database = pickle.load(db)
+            self.__Database = pickle.load(db)
 
 
     def _getDatabase(self):
-        return self.Database
+        return self.__Database
    

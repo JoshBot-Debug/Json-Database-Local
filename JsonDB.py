@@ -41,7 +41,7 @@ class JsonDB:
 
         # If the Class passed in is New(), then run the create() method
         if isinstance(self.__interface,NewInterface):
-            self.__interface.create()
+            self.__interface._create()
 
 
         # Try getting the database, this will only work when you pass Find() otherwise it will always pass

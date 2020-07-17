@@ -1,12 +1,13 @@
 from JsonDB import JsonDB, Create, New, Find
 
-# newDB = New("ReAnime")
-# DB = JsonDB(newDB)
+newDB = New("ReAnime")
+DB = JsonDB(newDB)
 
-foundDb = Find("ReAnime")
-DB = JsonDB(foundDb)
+# foundDb = Find("ReAnime")
+# DB = JsonDB(foundDb)
 
 # creator = Create()
+# creator.values()
 # creator.table("First Table")
 # creator.rows(["Name","Age","DOB"])
 # creator.values(["Joshua","21","21 Feb 1998"])

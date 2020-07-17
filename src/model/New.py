@@ -13,12 +13,12 @@ class New(JsonDBInterface,NewInterface):
 
     def __init__(self,Name: str):
         print(f'{self.__NAME} Init')
-        self.db = Database(Name)
-        self.DbName = Name
+        self.__db = Database(Name)
+        self.__DbName = Name
 
 
-    def create(self):
-        dbFileName = self.__DBDirectory+self.DbName
+    def _create(self):
+        dbFileName = self.__DBDirectory+self.__DbName
 
         # Check if the JsonDB folder exists and create it if not
         if not pathlib.Path(self.__DBDirectory).exists():
@@ -31,8 +31,8 @@ class New(JsonDBInterface,NewInterface):
 
         # Write the Database() to pickle
         with open(dbFileName+".db","wb") as db:
-            pickleData = pickle.dump(self.db,db, protocol=pickle.HIGHEST_PROTOCOL)
+            pickleData = pickle.dump(self.__db,db, protocol=pickle.HIGHEST_PROTOCOL)
         
 
-        print(f'[New DB] : {self.db}')
+        print(f'[New DB] : {self.__db}')
    
