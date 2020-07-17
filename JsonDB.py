@@ -44,7 +44,7 @@ class JsonDB:
             self.__interface._create()
 
 
-        # Try getting the database, this will only work when you pass Find() otherwise it will always pass
+        # Try getting the database, this will only work when you pass Find()
         if isinstance(self.__interface,FindInterface):
             self.__database = self.__interface._getDatabase()
 

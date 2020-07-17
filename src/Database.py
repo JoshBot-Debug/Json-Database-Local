@@ -27,7 +27,6 @@ class Database(object):
         return True
 
 
-
     def _getName(self):
         return self.__Name
 
