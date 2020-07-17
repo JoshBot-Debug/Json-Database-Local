@@ -108,7 +108,7 @@ class JsonDB:
         if not self.__selectedIndex:
             raise Exception(f"Could not find any row that has the value '{Value}'")
         
-        return True
+        return self
 
 
     # This method is used to update a table in the Database()
