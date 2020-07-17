@@ -62,7 +62,7 @@ class Database(object):
             currentTable[0].update({row: Values[i]})
 
 
-    def _newIndex(self,Table: str, Unique: str, Values: str):
+    def _newIndex(self,Table: str, Unique: list, Values: str):
         
         newIndex = len(self.DATABASE[self.__Name][Table])
         currentTable = self.DATABASE[self.__Name][Table]
@@ -71,9 +71,10 @@ class Database(object):
         # Checks if the chosen unique value exists in the current Table
         if Unique:
             for Row in currentTable:
-                if currentTable[Row][Unique] in Values:
-                    raise Exception(f"A row already exists with the value '{currentTable[Row][Unique]}'")
-                    exit(0)
+                for UniRow in Unique:
+                    if currentTable[Row][UniRow] in Values:
+                        raise Exception(f"The key '{UniRow}' already exists with the value '{currentTable[Row][UniRow]}'")
+                        exit(0)
 
 
         # Create the index in the table

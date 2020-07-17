@@ -1,32 +1,28 @@
 from JsonDB import JsonDB, Create, New, Find
 
-newDB = New("ReAnime")
-DB = JsonDB(newDB)
+# newDB = New("ReAnime")
+# DB = JsonDB(newDB)
 
 
-# DB = JsonDB(Find("ReAnime"))
-
-# creator = Create()
-# creator.values()
-# creator.table("First Table")
-# creator.rows(["Name","Age","DOB"])
-# creator.values(["Joshua","21","21 Feb 1998"])
-# DB.create(creator)
+DB = JsonDB(Find("ReAnime"))
 
 # creator = Create()
-# creator.table("Second Table")
-# creator.rows(["Skills","Height","Weight"])
-# creator.values(["Programmer","5.8","60 kgs"])
+# creator.table("Popular")
+# creator.rows(["Name","Episode Name","Episode Number"])
+# creator.values(["Re:Zero","Re:Zero Episode 1","1"])
 # DB.create(creator)
 
-# DB.select("First Table")
-# DB.unique("Name")
-# DB.new("Name","Elsa")
-# DB.new("Age","24")
-# DB.new("DOB","29 Mar")
+# DB.select("Popular")
+# DB.unique("Episode Name")
+# DB.new("Name","Re:Zero")
+# DB.new("Episode Name","Re:Zero Episode 2")
+# DB.new("Episode Number","2")
 # DB.flush()
 
-# DB.select("First Table")
-# DB.all("Name","Joshua")       # OR  DB.one("Name","Joshua")
-# DB.update("Age","21")
-# age = DB.get("Age")
+
+DB.select("Popular")
+DB.all("Name","Re:Zero")       # OR  DB.one("Name","Re:Zero")
+DB.find("Episode Number","2")
+DB.update("Episode Name","Re:Zero Episode 2")
+value = DB.get("Episode Name")
+print(value)

@@ -37,7 +37,7 @@ class JsonDB:
 
         self.__newRows = []
         self.__newValues = []
-        self.__newUnique = ""
+        self.__newUnique = []
 
         # If the Class passed in is New(), then run the create() method
         if isinstance(self.__interface,NewInterface):
@@ -151,7 +151,13 @@ class JsonDB:
         if not self.__selectedTableValues:
             raise Exception("You have to select a table first, use JsonDB().select()")
             exit(0)
-        
+
+
+        if Row not in self.__database._getTableAndRows()[self.__selectedTable]:
+            raise Exception(f"The row {Row} does not exist in '{self.__selectedTable}', your choices are {self.__database._getTableAndRows()[self.__selectedTable]}")
+            exit(0)
+
+
         if len(self.__selectedIndex) == 1:
             return self.__selectedTableValues[self.__selectedIndex[0]][Row]
 
@@ -190,7 +196,18 @@ class JsonDB:
 
     # This method is used to set a value which should be unique
     def unique(self, Row: str):
-        self.__newUnique = Row
+        self.__newUnique.append(Row)
+
+
+    # This method is used to find a record
+    def find(self, Row: str, Value: str):
+        for Index in self.__selectedIndex:
+            if self.__selectedTableValues[Index][Row] == Value:
+                self.__selectedIndex.clear()
+                self.__selectedIndex.append(Index)
+                return True
+
+        raise Exception(f"Couldn't find '{Value}' in the selected key '{Row}'")
 
 
     # This method is used to update the Database(), usually called after changes are made to the Database()
