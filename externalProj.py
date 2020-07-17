@@ -3,8 +3,8 @@ from JsonDB import JsonDB, Create, New, Find
 newDB = New("ReAnime")
 DB = JsonDB(newDB)
 
-# foundDb = Find("ReAnime")
-# DB = JsonDB(foundDb)
+
+# DB = JsonDB(Find("ReAnime"))
 
 # creator = Create()
 # creator.values()
@@ -26,8 +26,7 @@ DB = JsonDB(newDB)
 # DB.new("DOB","29 Mar")
 # DB.flush()
 
-# DB.all("Name","Joshua")
-# DB.one("Name","Joshua")
+# DB.select("First Table")
+# DB.all("Name","Joshua")       # OR  DB.one("Name","Joshua")
 # DB.update("Age","21")
-# DB.update("Age","A thousand years")
-# print(DB.get("Age"))
+# age = DB.get("Age")
