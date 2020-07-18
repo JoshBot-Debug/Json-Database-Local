@@ -241,3 +241,5 @@ class JsonDB:
         with open(dbFileName+".json","w") as db:
             jsonData = json.dumps(self.__database.DATABASE,indent=4)
             db.write(jsonData)
+
+        return True
