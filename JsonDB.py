@@ -39,9 +39,6 @@ class JsonDB:
         self.__newValues = []
         self.__newUnique = []
 
-
-        self.__allInstance = []
-
         # If the Class passed in is New(), then run the create() method
         if isinstance(self.__interface,NewInterface):
             self.__interface._create()
