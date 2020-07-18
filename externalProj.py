@@ -1,5 +1,7 @@
-# from JsonDatabase import JsonDatabase, Create, New, Find
+# from JsonDB.JsonDatabase import JsonDatabase, Create, New, Find
+# import setuptools
 
+# print(setuptools.find_packages())
 # newDB = New("ReAnime")
 # DB = JsonDatabase(newDB)
 
