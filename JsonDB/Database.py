@@ -18,7 +18,12 @@ class Database(object):
         if Table not in self.__ExistingTables:
             raise Exception(f'The table "{Table}" does not exist in the Database\nExisting tables are {self.__ExistingTables}')
         
-        return self.DATABASE[self.__Name][Table]
+        # This checks if the table has a value, if it does it returns it.
+        if self.DATABASE[self.__Name][Table]:
+            return self.DATABASE[self.__Name][Table]
+
+        # If the table does not have a value, then we are creating a new table so we just return true
+        return True
 
 
     def _update(self, Table: str, Index: int, Row: str, Value: str):
@@ -43,21 +48,17 @@ class Database(object):
             self.__TableAndRows.update({self.__currentTable:[]})
 
             # Update the DB Dict
-            self.DATABASE[self.__Name].update({Name: {0:{}}})
+            self.DATABASE[self.__Name].update({Name: {}})
 
             return True
         raise Exception(f"The Table '{Name}' already exists")
 
 
-    def _setRows(self,Rows: list,Values: list):
-        currentTable = self.DATABASE[self.__Name][self.__currentTable]
-        for i,row in enumerate(Rows):
+    def _setRows(self,Rows: list):
 
+        for i,row in enumerate(Rows):
             # Set the Row name Reference for the tables here
             self.__TableAndRows[self.__currentTable].append(row)
-
-            # Update the DB Dict
-            currentTable[0].update({row: Values[i]})
 
 
     def _newIndex(self,Table: str, Unique: list, Values: str):
@@ -65,14 +66,15 @@ class Database(object):
         newIndex = len(self.DATABASE[self.__Name][Table])
         currentTable = self.DATABASE[self.__Name][Table]
 
-
-        # Checks if the chosen unique value exists in the current Table
+        # Checks if the chosen unique value exists in the selected Table
         if Unique:
             for Row in currentTable:
                 for UniRow in Unique:
-                    if currentTable[Row][UniRow] in Values:
-                        raise Exception(f"The key '{UniRow}' already exists with the value '{currentTable[Row][UniRow]}'")
-                        exit(0)
+                    # Check if the current table has values
+                    if currentTable[Row]:
+                        if currentTable[Row][UniRow] in Values:
+                            raise Exception(f"The key '{UniRow}' already exists with the value '{currentTable[Row][UniRow]}'")
+                            exit(0)
 
 
         # Create the index in the table

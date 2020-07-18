@@ -58,10 +58,6 @@ class JsonDatabase:
 
         table = create._getTable()
         rows = create._getRows()
-        values = create._getValues()
-
-        if len(rows) != len(values):
-            raise Exception(f"The number of rows is {len(rows)} and the number of values is {len(values)}. They need to be equal, check Create().rows() and Create().values()")
 
         if not table:
             raise Exception("You have not created a table.")
@@ -69,11 +65,9 @@ class JsonDatabase:
         if not rows:
             raise Exception("You have not created rows for your table.")
         
-        if not values:
-            raise Exception("You have not assigned values for your row.")
-
         self.__database._setTable(table)
-        self.__database._setRows(rows,values)
+        # self.__database._setRows(rows,values)
+        self.__database._setRows(rows)
 
         # Save the .db file
         self.__save()
@@ -102,7 +96,6 @@ class JsonDatabase:
 
     # This method will get every index that finds a matching row and value
     def all(self,Row: str,Value: str):
-
         for index in self.__selectedTableValues:
             if self.__selectedTableValues[index][Row] == Value:
                 self.__selectedIndex.append(index)

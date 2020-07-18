@@ -14,10 +14,6 @@ class CreateInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def rows(self,Rows: list): pass
 
-    
-    @abc.abstractmethod
-    def values(self,Rows: list): pass
-
 
     @abc.abstractmethod
     def _getTable(self): pass
@@ -25,7 +21,3 @@ class CreateInterface(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def _getRows(self): pass
-
-
-    @abc.abstractmethod
-    def _getValues(self): pass
