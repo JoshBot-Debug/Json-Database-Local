@@ -39,6 +39,9 @@ class JsonDB:
         self.__newValues = []
         self.__newUnique = []
 
+
+        self.__allInstance = []
+
         # If the Class passed in is New(), then run the create() method
         if isinstance(self.__interface,NewInterface):
             self.__interface._create()
@@ -108,7 +111,7 @@ class JsonDB:
         if not self.__selectedIndex:
             raise Exception(f"Could not find any row that has the value '{Value}'")
         
-        return self
+        return True
 
 
     # This method is used to update a table in the Database()
