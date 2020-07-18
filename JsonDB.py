@@ -12,13 +12,13 @@ import pathlib
 import pickle
 import json
 
-from src.model.Create import Create
-from src.model.New import New
-from src.model.Find import Find
-from src.interface.JsonDBInterface import JsonDBInterface
-from src.interface.CreateInterface import CreateInterface
-from src.interface.FindInterface import FindInterface
-from src.interface.NewInterface import NewInterface
+from JsonDB.model.Create import Create
+from JsonDB.model.New import New
+from JsonDB.model.Find import Find
+from JsonDB.interface.JsonDBInterface import JsonDBInterface
+from JsonDB.interface.CreateInterface import CreateInterface
+from JsonDB.interface.FindInterface import FindInterface
+from JsonDB.interface.NewInterface import NewInterface
 
 class JsonDB:
 

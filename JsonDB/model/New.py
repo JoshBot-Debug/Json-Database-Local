@@ -2,9 +2,9 @@ import os
 import pickle
 import pathlib
 
-from src.interface.JsonDBInterface import JsonDBInterface
-from src.interface.NewInterface import NewInterface
-from src.Database import Database
+from JsonDB.interface.JsonDBInterface import JsonDBInterface
+from JsonDB.interface.NewInterface import NewInterface
+from JsonDB.Database import Database
 
 class New(JsonDBInterface,NewInterface):
 

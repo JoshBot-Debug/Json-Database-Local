@@ -3,8 +3,8 @@ import pickle
 import pathlib
 
 
-from src.interface.JsonDBInterface import JsonDBInterface
-from src.interface.FindInterface import FindInterface
+from JsonDB.interface.JsonDBInterface import JsonDBInterface
+from JsonDB.interface.FindInterface import FindInterface
 
 class Find(JsonDBInterface,FindInterface):
 

@@ -1,5 +1,5 @@
-from src.interface.JsonDBInterface import JsonDBInterface
-from src.interface.CreateInterface import CreateInterface
+from JsonDB.interface.JsonDBInterface import JsonDBInterface
+from JsonDB.interface.CreateInterface import CreateInterface
 
 class Create(JsonDBInterface,CreateInterface):
 

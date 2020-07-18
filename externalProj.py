@@ -1,4 +1,5 @@
 from JsonDB import JsonDB, Create, New, Find
+import setuptools
 
 # newDB = New("ReAnime")
 # DB = JsonDB(newDB)
