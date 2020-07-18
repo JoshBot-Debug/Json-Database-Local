@@ -66,7 +66,6 @@ class JsonDatabase:
             raise Exception("You have not created rows for your table.")
         
         self.__database._setTable(table)
-        # self.__database._setRows(rows,values)
         self.__database._setRows(rows)
 
         # Save the .db file
@@ -210,6 +209,14 @@ class JsonDatabase:
                 return self
 
         raise Exception(f"Couldn't find '{Value}' in the selected key '{Row}'")
+
+    
+    # This method is used to delete a record or a table
+    def delete(self):
+        self.__database._delete(self.__selectedTable,self.__selectedIndex)
+
+        # Save the .db file
+        self.__save()
 
 
     # This method is used to update the Database(), usually called after changes are made to the Database()

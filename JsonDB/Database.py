@@ -14,6 +14,7 @@ class Database(object):
 
 
     def _select(self, Table: str):
+
         # Check if the table exists in the Database()
         if Table not in self.__ExistingTables:
             raise Exception(f'The table "{Table}" does not exist in the Database\nExisting tables are {self.__ExistingTables}')
@@ -28,6 +29,25 @@ class Database(object):
 
     def _update(self, Table: str, Index: int, Row: str, Value: str):
         self.DATABASE[self.__Name][Table][Index][Row] = Value
+        return True
+
+
+    def _delete(self, Table: str, Index: list):
+        selectedTable =  self.DATABASE[self.__Name][Table]
+        
+        # Delete the table from the Database() if index is none
+        if not Index:
+            self.DATABASE[self.__Name].pop(Table)
+            self.__ExistingTables.remove(Table)
+            return True
+
+        # Delete the element from the Database() table
+        for i in Index:
+            selectedTable.pop(i)
+
+        # Reset the keys
+        self.DATABASE[self.__Name][Table] = {i: v for i, v in enumerate(selectedTable.values())}
+
         return True
 
 
