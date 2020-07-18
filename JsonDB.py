@@ -85,6 +85,8 @@ class JsonDB:
 
         if self.__selectedTableValues:
             self.__selectedTable = Table
+        
+        return self
 
 
     # This method will stop at the first index that finds a matching row and value
@@ -93,7 +95,7 @@ class JsonDB:
         for index in self.__selectedTableValues:
             if self.__selectedTableValues[index][Row] == Value:
                 self.__selectedIndex.append(index)
-                return True
+                return self
 
         raise Exception(f"Could not find any row that has the value '{Value}''")
 
@@ -108,7 +110,7 @@ class JsonDB:
         if not self.__selectedIndex:
             raise Exception(f"Could not find any row that has the value '{Value}'")
         
-        return True
+        return self
 
 
     # This method is used to update a table in the Database()
@@ -137,6 +139,8 @@ class JsonDB:
 
             # Save the .db file
             self.__save()
+
+        return self
 
 
     # This method is used to get a row from the selected table in the Database()
@@ -169,7 +173,7 @@ class JsonDB:
 
 
     # This method is used to create a new row in a selected table
-    def new(self, Row: str,Value: str):
+    def add(self, Row: str,Value: str):
         listOfRows = self.__database._getTableAndRows()[self.__selectedTable]
 
         if Row not in listOfRows:
@@ -178,6 +182,8 @@ class JsonDB:
         
         self.__newRows.append(Row)
         self.__newValues.append(Value)
+
+        return self
 
 
     # This method is used to save the new row
@@ -193,10 +199,13 @@ class JsonDB:
         # Save the .db file
         self.__save()
 
+        return True
+
 
     # This method is used to set a value which should be unique
     def unique(self, Row: str):
         self.__newUnique.append(Row)
+        return self
 
 
     # This method is used to find a record
@@ -205,7 +214,7 @@ class JsonDB:
             if self.__selectedTableValues[Index][Row] == Value:
                 self.__selectedIndex.clear()
                 self.__selectedIndex.append(Index)
-                return True
+                return self
 
         raise Exception(f"Couldn't find '{Value}' in the selected key '{Row}'")
 

@@ -14,17 +14,16 @@ DB = JsonDB(Find("ReAnime"))
 
 # DB.select("Popular")
 # DB.unique("Episode Name")
-# DB.new("Name","Re:Zero")
-# DB.new("Episode Name","Re:Zero Episode 2")
-# DB.new("Episode Number","2")
+# DB.add("Name","Re:Zero")
+# DB.add("Episode Name","Re:Zero Episode 2")
+# DB.add("Episode Number","2")
 # DB.flush()
 
 
 DB.select("Popular")
 # DB.one("Episode Name","Re:Zero Episode 2")
-DB.all("Name","Re:Zero")       # OR  DB.one("Name","Re:Zero")
-DB.where("Episode Number","2")
+# DB.all("Name","Re:Zero")       # OR  DB.one("Name","Re:Zero")
+# DB.where("Episode Number","2")
 # DB.update("Episode Name","Re:Zero Episode 2")
-
 value = DB.get("Episode Name")
 print(value)
