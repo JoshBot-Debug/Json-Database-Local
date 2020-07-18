@@ -10,7 +10,7 @@ class Find(JsonDBInterface,FindInterface):
 
 
     __NAME = "[Model Find.py]"
-    __DBDirectory = os.getcwd()+"\\JsonDB\\"
+    __DBDirectory = os.getcwd()+"\\JsonDatabase\\"
 
 
     def __init__(self,Name: str):

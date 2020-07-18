@@ -9,7 +9,7 @@ from JsonDB.Database import Database
 class New(JsonDBInterface,NewInterface):
 
     __NAME = "[Model New.py]"
-    __DBDirectory = os.getcwd()+"\\JsonDB\\"
+    __DBDirectory = os.getcwd()+"\\JsonDatabase\\"
 
     def __init__(self,Name: str):
         print(f'{self.__NAME} Init')

@@ -24,7 +24,7 @@ class JsonDB:
 
 
     __NAME = "[Controller JsonDB.py]"
-    __DBDirectory = os.getcwd()+"\\JsonDB\\"
+    __DBDirectory = os.getcwd()+"\\JsonDatabase\\"
 
 
     def __init__(self,JsonDBInterface):
