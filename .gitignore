@@ -2,5 +2,4 @@
 /env
 /jsonDB.egg-info
 /dist
-/setup.py
-/__init__.py
+/JsonDatabase

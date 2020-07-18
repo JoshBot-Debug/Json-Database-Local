@@ -20,10 +20,10 @@ from JsonDB.interface.CreateInterface import CreateInterface
 from JsonDB.interface.FindInterface import FindInterface
 from JsonDB.interface.NewInterface import NewInterface
 
-class JsonDB:
+class JsonDatabase:
 
 
-    __NAME = "[Controller JsonDB.py]"
+    __NAME = "[Controller JsonDatabase.py]"
     __DBDirectory = os.getcwd()+"\\JsonDatabase\\"
 
 

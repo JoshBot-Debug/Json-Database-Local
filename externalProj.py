@@ -1,11 +1,10 @@
-from JsonDB import JsonDB, Create, New, Find
-import setuptools
+# from JsonDatabase import JsonDatabase, Create, New, Find
 
 # newDB = New("ReAnime")
-# DB = JsonDB(newDB)
+# DB = JsonDatabase(newDB)
 
 
-# DB = JsonDB(Find("ReAnime"))
+# DB = JsonDatabase(Find("ReAnime"))
 
 # creator = Create()
 # creator.table("Popular")
@@ -22,9 +21,9 @@ import setuptools
 
 
 # DB.select("Popular")
-# DB.one("Episode Name","Re:Zero Episode 2")
+# # DB.one("Episode Name","Re:Zero Episode 2")
 # DB.all("Name","Re:Zero")       # OR  DB.one("Name","Re:Zero")
-# DB.where("Episode Number","2")
-# DB.update("Episode Name","Re:Zero Episode 2")
+# DB.where("Episode Number","3")
+# # DB.update("Episode Name","Re:Zero Episode 2")
 # value = DB.get("Episode Name")
 # print(value)

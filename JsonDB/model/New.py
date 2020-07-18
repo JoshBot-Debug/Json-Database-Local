@@ -20,9 +20,9 @@ class New(JsonDBInterface,NewInterface):
     def _create(self):
         dbFileName = self.__DBDirectory+self.__DbName
 
-        # Check if the JsonDB folder exists and create it if not
+        # Check if the JsonDatabase folder exists and create it if not
         if not pathlib.Path(self.__DBDirectory).exists():
-            os.makedirs("JsonDB")
+            os.makedirs("JsonDatabase")
 
         # Check if a DB file already exists
         if pathlib.Path(dbFileName+".db").exists():
