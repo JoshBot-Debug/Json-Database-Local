@@ -1,3 +1,5 @@
+from JsonDB.jdbException.jdbException import TableNotFoundError, TableAlreadyExistsError, ValueNotUniqueError
+
 class Database(object):
 
 
@@ -17,7 +19,7 @@ class Database(object):
 
         # Check if the table exists in the Database()
         if Table not in self.__ExistingTables:
-            raise Exception(f'The table "{Table}" does not exist in the Database\nExisting tables are {self.__ExistingTables}')
+            raise TableNotFoundError(f'The table "{Table}" does not exist in the Database\nExisting tables are {self.__ExistingTables}')
         
         # This checks if the table has a value, if it does it returns it.
         if self.DATABASE[self.__Name][Table]:
@@ -71,7 +73,7 @@ class Database(object):
             self.DATABASE[self.__Name].update({Name: {}})
 
             return True
-        raise Exception(f"The Table '{Name}' already exists")
+        raise TableAlreadyExistsError(f"The Table '{Name}' already exists")
 
 
     def _setRows(self,Rows: list):
@@ -93,8 +95,7 @@ class Database(object):
                     # Check if the current table has values
                     if currentTable[Row]:
                         if currentTable[Row][UniRow] in Values:
-                            raise Exception(f"The key '{UniRow}' already exists with the value '{currentTable[Row][UniRow]}'")
-                            exit(0)
+                            raise ValueNotUniqueError(f"The key '{UniRow}' already exists with the value '{currentTable[Row][UniRow]}'")
 
 
         # Create the index in the table

@@ -5,6 +5,7 @@ import pathlib
 from JsonDB.interface.JsonDBInterface import JsonDBInterface
 from JsonDB.interface.NewInterface import NewInterface
 from JsonDB.Database import Database
+from JsonDB.jdbException.jdbException import NewDatabaseError
 
 class New(JsonDBInterface,NewInterface):
 
@@ -26,8 +27,7 @@ class New(JsonDBInterface,NewInterface):
 
         # Check if a DB file already exists
         if pathlib.Path(dbFileName+".db").exists():
-            raise Exception("This database file already exists, please rename the file or delete the existing one.")
-            exit(0)
+            raise NewDatabaseError("This database file already exists, please rename the file or delete the existing one.")
 
         # Write the Database() to pickle
         with open(dbFileName+".db","wb") as db:

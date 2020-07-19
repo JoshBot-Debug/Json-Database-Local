@@ -20,6 +20,8 @@ from JsonDB.interface.CreateInterface import CreateInterface
 from JsonDB.interface.FindInterface import FindInterface
 from JsonDB.interface.NewInterface import NewInterface
 
+from JsonDB.jdbException.jdbException import ValueNotFoundError, KeyNotFoundError
+
 class JsonDatabase:
 
 
@@ -90,7 +92,7 @@ class JsonDatabase:
                 self.__selectedIndex.append(index)
                 return self
 
-        raise Exception(f"Could not find any row that has the value '{Value}''")
+        raise ValueNotFoundError(f"Could not find any row that has the value '{Value}''")
 
 
     # This method will get every index that finds a matching row and value
@@ -100,7 +102,7 @@ class JsonDatabase:
                 self.__selectedIndex.append(index)
 
         if not self.__selectedIndex:
-            raise Exception(f"Could not find any row that has the value '{Value}'")
+            raise ValueNotFoundError(f"Could not find any row that has the value '{Value}'")
         
         return self
 
@@ -111,20 +113,17 @@ class JsonDatabase:
         # Checks wheather we have an index
         if not self.__selectedIndex:
             raise Exception("You have to choose one or all, use JsonDB().one() or JsonDB().all()")
-            exit(0)
 
         # Check if a table was selected
         if not self.__selectedTableValues:
             raise Exception("You have to select a table first, use JsonDB().select()")
-            exit(0)
         
         for Index in self.__selectedIndex:
             keys = list(self.__selectedTableValues[Index])
 
             # Check if the row exists in the selected table
             if Row not in keys:
-                raise Exception(f"The row {Row} does not exist in the selected table.\nExisting tables are {keys}")
-                exit(0)
+                raise KeyNotFoundError(f"The row {Row} does not exist in the selected table.\nExisting tables are {keys}")
 
             # This passes all the verified data to the database
             self.__database._update(self.__selectedTable,Index,Row,Value)
@@ -141,17 +140,14 @@ class JsonDatabase:
         # Checks wheather we have an index
         if not self.__selectedIndex:
             raise Exception("You have to choose one or all, use JsonDB().one() or JsonDB().all()")
-            exit(0)
 
         # Check if a table was selected
         if not self.__selectedTableValues:
             raise Exception("You have to select a table first, use JsonDB().select()")
-            exit(0)
 
-
+        # Check if the key exists
         if Row not in self.__database._getTableAndRows()[self.__selectedTable]:
-            raise Exception(f"The row {Row} does not exist in '{self.__selectedTable}', your choices are {self.__database._getTableAndRows()[self.__selectedTable]}")
-            exit(0)
+            raise KeyNotFoundError(f"The row {Row} does not exist in '{self.__selectedTable}', your choices are {self.__database._getTableAndRows()[self.__selectedTable]}")
 
 
         if len(self.__selectedIndex) == 1:
@@ -169,8 +165,7 @@ class JsonDatabase:
         listOfRows = self.__database._getTableAndRows()[self.__selectedTable]
 
         if Row not in listOfRows:
-            raise Exception(f"The row '{Row}' does not exist in the table {self.__selectedTable}")
-            exit(0)
+            raise KeyNotFoundError(f"The row '{Row}' does not exist in the table {self.__selectedTable}")
         
         self.__newRows.append(Row)
         self.__newValues.append(Value)
@@ -208,7 +203,7 @@ class JsonDatabase:
                 self.__selectedIndex.append(Index)
                 return self
 
-        raise Exception(f"Couldn't find '{Value}' in the selected key '{Row}'")
+        raise ValueNotFoundError(f"Couldn't find '{Value}' in the selected key '{Row}'")
 
     
     # This method is used to delete a record or a table
@@ -226,12 +221,10 @@ class JsonDatabase:
         # Check if the JsonDB folder exists
         if not pathlib.Path(self.__DBDirectory).exists():
             raise Exception("The Database directory does not exist, please create a database first.")
-            exit(0)
 
         # Check if a DB file exists
         if not pathlib.Path(dbFileName+".db").exists():
             raise Exception("The Database file does not exist, please create a database first.")
-            exit(0)
 
         # Write the Database() to pickle
         with open(dbFileName+".db","wb") as db:

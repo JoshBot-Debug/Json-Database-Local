@@ -5,6 +5,7 @@ import pathlib
 
 from JsonDB.interface.JsonDBInterface import JsonDBInterface
 from JsonDB.interface.FindInterface import FindInterface
+from JsonDB.jdbException.jdbException import JdbFileNotFoundError
 
 class Find(JsonDBInterface,FindInterface):
 
@@ -18,7 +19,7 @@ class Find(JsonDBInterface,FindInterface):
         dbFileName = self.__DBDirectory+Name+".db"
 
         if not pathlib.Path(dbFileName).exists():
-            raise FileNotFoundError(f"Your Database file was not found in '{dbFileName}'")
+            raise JdbFileNotFoundError(f"Your Database file was not found in '{dbFileName}'")
 
         # Open the .db file and unpickle it
         with open(dbFileName,"rb") as db:

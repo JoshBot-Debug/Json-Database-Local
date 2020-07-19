@@ -9,7 +9,7 @@ from JsonDB.JsonDatabase import JsonDatabase, Create, New, Find
 DB = JsonDatabase(Find("ReAnime"))
 
 # creator = Create()
-# creator.table("Recently added")
+# creator.table("Popular")
 # creator.rows(["Name","Episode Name","Episode Number"])
 # DB.create(creator)
 
@@ -21,12 +21,12 @@ DB = JsonDatabase(Find("ReAnime"))
 # DB.flush()
 
 
-DB.select("Recently added")
+# DB.select("Recently added")
 
 # DB.one("Episode Name","Domestic na Kanojo Episode 1")
 # DB.all("Name","Re:Zero")       # OR  DB.one("Name","Re:Zero")
 # DB.where("Episode Name","Re:Zero Episode 2")
-DB.delete()
+# DB.delete()
 # # DB.update("Episode Number","2")
 # # value = DB.get("Episode Number")
 # # print(value)
