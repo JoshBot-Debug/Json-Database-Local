@@ -8,7 +8,7 @@ from JsonDB.interface.FindInterface import FindInterface
 from JsonDB.jdbException.jdbException import JdbFileNotFoundError
 
 class Find(JsonDBInterface,FindInterface):
-
+    "This class is used to find a Database() by name."
 
     __NAME = "[Model Find.py]"
     __DBDirectory = os.getcwd()+"\\JsonDatabase\\"

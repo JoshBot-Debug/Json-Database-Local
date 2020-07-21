@@ -8,6 +8,7 @@ from JsonDB.Database import Database
 from JsonDB.jdbException.jdbException import NewDatabaseError
 
 class New(JsonDBInterface,NewInterface):
+    "This class is used to create a new Database()"
 
     __NAME = "[Model New.py]"
     __DBDirectory = os.getcwd()+"\\JsonDatabase\\"

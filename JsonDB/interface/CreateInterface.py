@@ -12,7 +12,7 @@ class CreateInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
-    def rows(self,Rows: list): pass
+    def keys(self,Keys: list): pass
 
 
     @abc.abstractmethod

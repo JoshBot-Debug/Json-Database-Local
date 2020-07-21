@@ -2,6 +2,7 @@ from JsonDB.interface.JsonDBInterface import JsonDBInterface
 from JsonDB.interface.CreateInterface import CreateInterface
 
 class Create(JsonDBInterface,CreateInterface):
+    "This class is used create a new table in the Database()"
 
     __NAME = "[Model Create.py]"
 
@@ -15,8 +16,8 @@ class Create(JsonDBInterface,CreateInterface):
         self.__tableName = Name
 
 
-    def rows(self,Rows: list):
-        self.__rowsList = Rows
+    def keys(self,Keys: list):
+        self.__rowsList = Keys
 
     def _getTable(self):
         return self.__tableName

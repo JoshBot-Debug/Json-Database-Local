@@ -23,7 +23,9 @@ from JsonDB.interface.NewInterface import NewInterface
 from JsonDB.jdbException.jdbException import ValueNotFoundError, KeyNotFoundError
 
 class JsonDatabase:
-
+    """This class is used to manage the Database(). It accepts a NewInterface()
+    to create a new Database() or a FindInterface() to find an existing Database().
+    """
 
     __NAME = "[Controller JsonDatabase.py]"
     __DBDirectory = os.getcwd()+"\\JsonDatabase\\"
@@ -51,8 +53,9 @@ class JsonDatabase:
             self.__database = self.__interface._getDatabase()
 
 
-    # This method is used to create a table
+    # This method is used to create a new table in the Database()
     def create(self,create: CreateInterface):
+        "This method is used to create a new table in the Database()"
 
         # Check if the class passed here is an isinstance of the CreateInterface()
         if not isinstance(create, CreateInterface):
@@ -74,8 +77,9 @@ class JsonDatabase:
         self.__save()
 
 
-    # This method is used to select a table in the Database()
+    # This method is used to select a single table in the Database()
     def select(self,Table: str):
+        "This method is used to select a single table in the Database()"
         self.__selectedTableValues = self.__database._select(Table)
 
         if self.__selectedTableValues:
@@ -84,32 +88,37 @@ class JsonDatabase:
         return self
 
 
-    # This method will stop at the first index that finds a matching row and value
-    def one(self,Row: str,Value: str):
+    # This method will stop at the first index that finds a matching key and value
+    def one(self,Key: str,Value: str):
+        "This method will stop at the first index that finds a matching key and value"
 
         for index in self.__selectedTableValues:
-            if self.__selectedTableValues[index][Row] == Value:
+            if self.__selectedTableValues[index][Key] == Value:
                 self.__selectedIndex.append(index)
                 return self
 
-        raise ValueNotFoundError(f"Could not find any row that has the value '{Value}''")
+        raise ValueNotFoundError(f"Could not find any key that has the value '{Value}''")
 
 
-    # This method will get every index that finds a matching row and value
-    def all(self,Row: str,Value: str):
+
+    # This method will get every index that finds a matching key and value
+    def all(self,Key: str,Value: str):
+        "This method will get every index that finds a matching key and value"
+
         for index in self.__selectedTableValues:
-            if self.__selectedTableValues[index][Row] == Value:
+            if self.__selectedTableValues[index][Key] == Value:
                 self.__selectedIndex.append(index)
 
         if not self.__selectedIndex:
-            raise ValueNotFoundError(f"Could not find any row that has the value '{Value}'")
+            raise ValueNotFoundError(f"Could not find any key that has the value '{Value}'")
         
         return self
 
 
     # This method is used to update a table in the Database()
-    def update(self,Row: str,Value: str):
-        
+    def update(self,Key: str,Value: str):
+        "This method is used to update a value in the Database() after it has been found."
+
         # Checks wheather we have an index
         if not self.__selectedIndex:
             raise Exception("You have to choose one or all, use JsonDB().one() or JsonDB().all()")
@@ -121,12 +130,12 @@ class JsonDatabase:
         for Index in self.__selectedIndex:
             keys = list(self.__selectedTableValues[Index])
 
-            # Check if the row exists in the selected table
-            if Row not in keys:
-                raise KeyNotFoundError(f"The row {Row} does not exist in the selected table.\nExisting tables are {keys}")
+            # Check if the key exists in the selected table
+            if Key not in keys:
+                raise KeyNotFoundError(f"The key {Key} does not exist in the selected table.\nExisting tables are {keys}")
 
             # This passes all the verified data to the database
-            self.__database._update(self.__selectedTable,Index,Row,Value)
+            self.__database._update(self.__selectedTable,Index,Key,Value)
 
             # Save the .db file
             self.__save()
@@ -134,8 +143,9 @@ class JsonDatabase:
         return self
 
 
-    # This method is used to get a row from the selected table in the Database()
-    def get(self,Row: str):
+    # This method is used to get a value from the selected table in the Database() using a key
+    def get(self,Key: str):
+        "This method is used to get a value from the selected table in the Database() using a key"
         
         # Checks wheather we have an index
         if not self.__selectedIndex:
@@ -146,42 +156,46 @@ class JsonDatabase:
             raise Exception("You have to select a table first, use JsonDB().select()")
 
         # Check if the key exists
-        if Row not in self.__database._getTableAndRows()[self.__selectedTable]:
-            raise KeyNotFoundError(f"The row {Row} does not exist in '{self.__selectedTable}', your choices are {self.__database._getTableAndRows()[self.__selectedTable]}")
+        if Key not in self.__database._getTableAndRows()[self.__selectedTable]:
+            raise KeyNotFoundError(f"The key {Key} does not exist in '{self.__selectedTable}', your choices are {self.__database._getTableAndRows()[self.__selectedTable]}")
 
 
         if len(self.__selectedIndex) == 1:
-            return self.__selectedTableValues[self.__selectedIndex[0]][Row]
+            return self.__selectedTableValues[self.__selectedIndex[0]][Key]
 
         listOfResults = []
         for Index in self.__selectedIndex:
-            listOfResults.append(self.__selectedTableValues[Index][Row])
+            listOfResults.append(self.__selectedTableValues[Index][Key])
 
         return listOfResults
 
 
-    # This method is used to create a new row in a selected table
-    def add(self, Row: str,Value: str):
+    # This method is used to create a new key in a selected table
+    def add(self, Key: str,Value: str):
+        "This method is used to create a new key in a selected table"
+
         listOfRows = self.__database._getTableAndRows()[self.__selectedTable]
 
-        if Row not in listOfRows:
-            raise KeyNotFoundError(f"The row '{Row}' does not exist in the table {self.__selectedTable}")
+        if Key not in listOfRows:
+            raise KeyNotFoundError(f"The key '{Key}' does not exist in the table {self.__selectedTable}")
         
-        self.__newRows.append(Row)
+        self.__newRows.append(Key)
         self.__newValues.append(Value)
 
         return self
 
 
-    # This method is used to save the new row
+    # This method is used to save a new record
     def flush(self):
+        "This method is used to save a new record"
+
         listOfRows = self.__database._getTableAndRows()[self.__selectedTable]
 
-        # Creates an empty Row with the new index and returns the index number
+        # Creates an empty Key with the new index and returns the index number
         Index = self.__database._newIndex(self.__selectedTable,self.__newUnique,self.__newValues)
 
-        for i,Row in enumerate(self.__newRows):
-            self.__database._update(self.__selectedTable,Index,Row,self.__newValues[i])
+        for i,Key in enumerate(self.__newRows):
+            self.__database._update(self.__selectedTable,Index,Key,self.__newValues[i])
 
         # Save the .db file
         self.__save()
@@ -189,25 +203,31 @@ class JsonDatabase:
         return True
 
 
-    # This method is used to set a value which should be unique
-    def unique(self, Row: str):
-        self.__newUnique.append(Row)
+    # This method is used to set a key which should be unique in the table while updating it.
+    def unique(self, Key: str):
+        "This method is used to set a key which should be unique in the table while updating it."
+
+        self.__newUnique.append(Key)
         return self
 
 
-    # This method is used to find a record
-    def where(self, Row: str, Value: str):
+    # This method is used to find a record after selecting multiple records using the all() method.
+    def where(self, Key: str, Value: str):
+        "This method is used to find a record after selecting multiple records using the all() method."
+
         for Index in self.__selectedIndex:
-            if self.__selectedTableValues[Index][Row] == Value:
+            if self.__selectedTableValues[Index][Key] == Value:
                 self.__selectedIndex.clear()
                 self.__selectedIndex.append(Index)
                 return self
 
-        raise ValueNotFoundError(f"Couldn't find '{Value}' in the selected key '{Row}'")
+        raise ValueNotFoundError(f"Couldn't find '{Value}' in the selected key '{Key}'")
 
     
     # This method is used to delete a record or a table
     def delete(self):
+        "This method is used to delete a record or a table."
+
         self.__database._delete(self.__selectedTable,self.__selectedIndex)
 
         # Save the .db file
@@ -216,6 +236,8 @@ class JsonDatabase:
 
     # This method is used to update the Database(), usually called after changes are made to the Database()
     def __save(self):
+        "This method is used to update the Database(), usually called after changes are made to the Database()."
+
         dbFileName = self.__DBDirectory+self.__database._getName()
 
         # Check if the JsonDB folder exists

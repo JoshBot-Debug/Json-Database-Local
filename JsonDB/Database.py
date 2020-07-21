@@ -76,11 +76,11 @@ class Database(object):
         raise TableAlreadyExistsError(f"The Table '{Name}' already exists")
 
 
-    def _setRows(self,Rows: list):
+    def _setRows(self,keys: list):
 
-        for i,row in enumerate(Rows):
+        for i,key in enumerate(keys):
             # Set the Row name Reference for the tables here
-            self.__TableAndRows[self.__currentTable].append(row)
+            self.__TableAndRows[self.__currentTable].append(key)
 
 
     def _newIndex(self,Table: str, Unique: list, Values: str):
@@ -101,11 +101,11 @@ class Database(object):
         # Create the index in the table
         currentTable.update({newIndex:{}})
 
-        Rows = self.__TableAndRows[Table]
+        keys = self.__TableAndRows[Table]
 
-        for i,row in enumerate(Rows):
+        for i,key in enumerate(keys):
             # Update the DB Dict with empty values
-            currentTable[newIndex].update({row: ""})
+            currentTable[newIndex].update({key: ""})
 
         # return the new index
         return newIndex
