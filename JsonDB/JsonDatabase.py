@@ -33,24 +33,23 @@ class JsonDatabase:
 
     def __init__(self,JsonDBInterface):
         print(f'{self.__NAME} Init')
-        self.__interface = JsonDBInterface
+
         self.__selectedTableValues = None
         self.__selectedTable = None
-        self.__selectedRow = None
         self.__selectedIndex = []
 
-        self.__newRows = []
+        self.__newKeys = []
         self.__newValues = []
         self.__newUnique = []
 
         # If the Class passed in is New(), then run the create() method
-        if isinstance(self.__interface,NewInterface):
-            self.__interface._create()
+        if isinstance(JsonDBInterface,NewInterface):
+            JsonDBInterface._create()
 
 
         # Try getting the database, this will only work when you pass Find()
-        if isinstance(self.__interface,FindInterface):
-            self.__database = self.__interface._getDatabase()
+        if isinstance(JsonDBInterface,FindInterface):
+            self.__database = JsonDBInterface._getDatabase()
 
 
     # This method is used to create a new table in the Database()
@@ -179,7 +178,7 @@ class JsonDatabase:
         if Key not in listOfRows:
             raise KeyNotFoundError(f"The key '{Key}' does not exist in the table {self.__selectedTable}")
         
-        self.__newRows.append(Key)
+        self.__newKeys.append(Key)
         self.__newValues.append(Value)
 
         return self
@@ -194,11 +193,16 @@ class JsonDatabase:
         # Creates an empty Key with the new index and returns the index number
         Index = self.__database._newIndex(self.__selectedTable,self.__newUnique,self.__newValues)
 
-        for i,Key in enumerate(self.__newRows):
+        for i,Key in enumerate(self.__newKeys):
             self.__database._update(self.__selectedTable,Index,Key,self.__newValues[i])
 
         # Save the .db file
         self.__save()
+
+        # Clear the list of keys and values, this is done so that we can instantiate the Database once
+        # and then in a for loop, keep using .add() and .flush()
+        self.__newKeys.clear()
+        self.__newValues.clear()
 
         return True
 
@@ -252,7 +256,7 @@ class JsonDatabase:
         with open(dbFileName+".db","wb") as db:
             pickleData = pickle.dump(self.__database,db, protocol=pickle.HIGHEST_PROTOCOL)
 
-        # TMP
+        # Writes a json file so that we can see the database
         with open(dbFileName+".json","w") as db:
             jsonData = json.dumps(self.__database.DATABASE,indent=4)
             db.write(jsonData)
