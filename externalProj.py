@@ -14,12 +14,12 @@ DB = JsonDatabase(Find("ReAnime"))
 # DB.select("Recent")
 # DB.unique("Name")
 
-# names = ["Hannah","Elsa","Joshua","EXTRA"]
+# names = ["Tom","Dick","Harry"]
 
 # for name in names:
 #     try:
 #         DB.add("Name",name)
-#         DB.add("age","20")
+#         DB.add("age","15")
 #         DB.flush()
 #     except ValueNotUniqueError as e:
 #         print(e)
@@ -33,26 +33,9 @@ DB = JsonDatabase(Find("ReAnime"))
 
 DB.select("Recent")
 DB.all("age","20")
-DB.where("Name","Joshua",False)
-DB.update('age','15')
+DB.where("age","20",True)
+DB.where("Name","Joshua",True)
+DB.update("age","21")
+
 print(DB.get("Name"))
 
-# DB.select("Recent")
-# DB.all("age","20")
-# try:
-#     DB.where("Name","Joshua",False)
-# except ValueNotFoundError as e:
-#     print(e)
-# # DB.all("Name","Joshua")
-# # DB.delete()
-# print(DB.get("Name"))
-
-# DB.select("Popular")
-
-# DB.one("Episode Name","Domestic na Kanojo Episode 1")
-# DB.all("Name","Re:Zero")       # OR  DB.one("Name","Re:Zero")
-# DB.where("Episode Name","Re:Zero Episode 2")
-# DB.delete()
-# DB.update("Episode Number","2")
-# value = DB.get("Episode Number")
-# print(value)

@@ -240,40 +240,31 @@ class JsonDatabase:
 
     # This method is used to find a record after selecting multiple records using the all() method.
     def where(self, Key: str, Value: str, Condition: bool):
-        """This method is used to find a record after selecting multiple records using the all() or select() method.
+        """This method is used to find records after selecting multiple records using the all() or select() method. Using a condition.
         Condition: is True by default, if set to False, it will find all the keys where the value is not
-        what the given value is.
+        what the given value is. NOTE: using .all() method before using .where() is faster than calling .where() after .select()
         """
 
-        if Condition:
-            # for index in the selected index(s) __selectedIndex
-            for Index in self.__selectedIndex:
-                # If we find a matching value return clear __selectedIndex
-                # and append the index of the matching value.
-                if self.__selectedTableValues[Index][Key] == Value:
-                    self.__selectedIndex.clear()
-                    self.__selectedIndex.append(Index)
-                    return self
-
-            # If we find no matching value, raise an exception
-            raise ValueNotFoundError(f"Couldn't find '{Value}' in the selected key '{Key}'")
-
-        if not Condition:
-            tmp = []
-            # for index in the selected index(s) __selectedIndex
-            for Index in self.__selectedIndex:
-                # If we find a matching value return clear __selectedIndex
-                # and append the index of the matching value.
+        tmp = []
+        # for index in the selected index(s) __selectedIndex
+        for Index in self.__selectedIndex:
+            # If we find a matching value return clear __selectedIndex
+            # and append the index of the matching value.
+            if not Condition:
                 if self.__selectedTableValues[Index][Key] != Value:
                     tmp.append(Index)
+            if Condition:
+                if self.__selectedTableValues[Index][Key] == Value:
+                    tmp.append(Index)
 
-            if tmp:
-                self.__selectedIndex.clear()
-                self.__selectedIndex = tmp
-                return self
+        if tmp:
+            self.__selectedIndex.clear()
+            self.__selectedIndex = tmp
+            return self
         
         # If we find no matching value, raise an exception
         raise ValueNotFoundError(f"Couldn't find any records")
+
 
     # This method is used to delete a record or a table
     def delete(self):
