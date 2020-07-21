@@ -1,4 +1,5 @@
 from JsonDB.JsonDatabase import JsonDatabase, Create, New, Find
+from JsonDB.jdbException.jdbException import ValueNotFoundError, KeyNotFoundError, ValueNotUniqueError
 
 
 # DB = JsonDatabase(New("ReAnime"))
@@ -7,22 +8,32 @@ DB = JsonDatabase(Find("ReAnime"))
 
 # creator = Create()
 # creator.table("Recent")
-# creator.keys(["Name"])
+# creator.keys(["Name","age"])
 # DB.create(creator)
 
 # DB.select("Recent")
 # DB.unique("Name")
 
-# names = ["Joshua","Hannah","Elsa"]
+# names = ["Hannah","Elsa","Joshua"]
 
 # for name in names:
-#     DB.add("Name",name)
-#     DB.flush()
+#     try:
+#         DB.add("Name",name)
+#         DB.add("age","20")
+#         DB.flush()
+#     except ValueNotUniqueError as e:
+#         print(e)
 
 
-# DB.select("Recent")
-# # DB.all("Name","Joshua")
+DB.select("Recent")
+DB.all("age","20")
+try:
+    DB.where("Name","Joshua",False)
+except ValueNotFoundError as e:
+    print(e)
+# DB.all("Name","Joshua")
 # DB.delete()
+print(DB.get("Name"))
 
 # DB.select("Popular")
 
