@@ -29,8 +29,8 @@ class Database(object):
         return True
 
 
-    def _update(self, Table: str, Index: int, Key: str, Value: str):
-        self.DATABASE[self.__Name][Table][Index][Key] = Value
+    def _update(self, Table: str, Index: int, Row: str, Value: str):
+        self.DATABASE[self.__Name][Table][Index][Row] = Value
         return True
 
 
@@ -66,7 +66,7 @@ class Database(object):
             self.__ExistingTables.append(Name)
             self.__currentTable = Name
 
-            # Set the Refrence of Tables and Key names here
+            # Set the Refrence of Tables and Row names here
             self.__TableAndRows.update({self.__currentTable:[]})
 
             # Update the DB Dict
@@ -79,7 +79,7 @@ class Database(object):
     def _setRows(self,keys: list):
 
         for i,key in enumerate(keys):
-            # Set the Key name Reference for the tables here
+            # Set the Row name Reference for the tables here
             self.__TableAndRows[self.__currentTable].append(key)
 
 
@@ -90,12 +90,12 @@ class Database(object):
 
         # Checks if the chosen unique value exists in the selected Table
         if Unique:
-            for index in currentTable:
-                for UniqueKey in Unique:
+            for Row in currentTable:
+                for UniRow in Unique:
                     # Check if the current table has values
-                    if currentTable[index]:
-                        if currentTable[index][UniqueKey] in Values:
-                            raise ValueNotUniqueError(f"The key '{UniqueKey}' already exists with the value '{currentTable[index][UniqueKey]}'")
+                    if currentTable[Row]:
+                        if currentTable[Row][UniRow] in Values:
+                            raise ValueNotUniqueError(f"The key '{UniRow}' already exists with the value '{currentTable[Row][UniRow]}'")
 
 
         # Create the index in the table

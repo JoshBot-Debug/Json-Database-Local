@@ -23,8 +23,8 @@ from JsonDB.interface.NewInterface import NewInterface
 from JsonDB.jdbException.jdbException import ValueNotFoundError, KeyNotFoundError, ValueNotUniqueError
 
 class JsonDatabase:
-    """This class is used to manage the Database(). It accepts a the New() class
-    to create a new Database() or a Find() class to find an existing Database().
+    """This class is used to manage the Database(). It accepts a NewInterface()
+    to create a new Database() or a FindInterface() to find an existing Database().
     """
 
     __NAME = "[Controller JsonDatabase.py]"

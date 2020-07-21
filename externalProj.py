@@ -11,9 +11,10 @@ DB = JsonDatabase(Find("ReAnime"))
 # creator.keys(["Name","age"])
 # DB.create(creator)
 
-# DB.select("Recent")
-# DB.unique("Name")
+DB.select("Recent")
+DB.unique("Name")
 
+<<<<<<< HEAD
 # names = ["Hannah","Elsa","Joshua"]
 
 # for name in names:
@@ -32,6 +33,17 @@ try:
 except ValueNotFoundError as e:
     print(e)
 # DB.all("Name","Joshua")
+=======
+names = ["Joshua","Hannah","Elsa"]
+
+for name in names:
+    DB.add("Name",name)
+    DB.flush()
+
+
+# DB.select("Recent")
+# # DB.all("Name","Joshua")
+>>>>>>> parent of 2d15f17... Renamed a few methods and documented them
 # DB.delete()
 print(DB.get("Name"))
 
