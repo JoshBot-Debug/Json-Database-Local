@@ -95,7 +95,7 @@ class Database(object):
                     # Check if the current table has values
                     if currentTable[Row]:
                         if currentTable[Row][UniRow] in Values:
-                            raise ValueNotUniqueError(f"The key '{UniRow}' already exists with the value '{currentTable[Row][UniRow]}'")
+                            return {"error": {"key":UniRow,"value" : currentTable[Row][UniRow]}}
 
 
         # Create the index in the table

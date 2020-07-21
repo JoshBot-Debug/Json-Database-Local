@@ -80,15 +80,10 @@ class JsonDatabase:
     def select(self,Table: str):
         "This method is used to select a single table in the Database()"
 
-        self.__selectedIndex.clear()
         self.__selectedTableValues = self.__database._select(Table)
 
         if self.__selectedTableValues:
             self.__selectedTable = Table
-
-            if not isinstance(self.__selectedTableValues,bool):
-                for index in self.__selectedTableValues:
-                    self.__selectedIndex.append(index)
             
         return self
 
@@ -198,6 +193,14 @@ class JsonDatabase:
 
         # Creates an empty Key with the new index and returns the index number
         Index = self.__database._newIndex(self.__selectedTable,self.__newUnique,self.__newValues)
+        
+        # If we received a dict, then we caught a ValueNotUniqueError
+        if isinstance(Index,dict):
+            # Clear the list of keys and values, this is done so that we can instantiate the Database once
+            # and then in a for loop, keep using .add() and .flush()
+            self.__newKeys.clear()
+            self.__newValues.clear()
+            raise ValueNotUniqueError(f"The key '{Index['error']['key']}' already exists with the value '{Index['error']['value']}'")
 
 
         for i,Key in enumerate(self.__newKeys):
@@ -223,50 +226,25 @@ class JsonDatabase:
 
 
     # This method is used to find a record after selecting multiple records using the all() method.
-    def where(self, Key: str, Value: str, Condition: bool):
+    def where(self, Key: str, Value: str):
         """This method is used to find a record after selecting multiple records using the all() method.
         Condition: is True by default, if set to False, it will find all the keys where the value is not
         what the given value is.
         """
         
-        # If the condition is true
-        if Condition:
-            # for index in the selected index(s) __selectedIndex
-            for Index in self.__selectedIndex:
-                # If we find a matching value return clear __selectedIndex
-                # and append the index of the matching value.
-                if self.__selectedTableValues[Index][Key] == Value:
-                    self.__selectedIndex.clear()
-                    self.__selectedIndex.append(Index)
-                    return self
+        # for index in the selected index(s) __selectedIndex
+        for Index in self.__selectedIndex:
+            # If we find a matching value return clear __selectedIndex
+            # and append the index of the matching value.
+            if self.__selectedTableValues[Index][Key] == Value:
+                self.__selectedIndex.clear()
+                self.__selectedIndex.append(Index)
+                return self
 
             # If we find no matching value, raise an exception
             raise ValueNotFoundError(f"Couldn't find '{Value}' in the selected key '{Key}'")
 
-        # If the condition is false
-        if not Condition:
-            # create a tmp array and check each index in __selectedIndex
-            tmp = []
-            for Index in self.__selectedIndex:
-                # if we find values that do not match the given value, append it to tmp array
-                if self.__selectedTableValues[Index][Key] != Value:
-                    tmp.append(Index)
 
-            # If tmp array is not empty, clear __selectedIndex and set it to the value of tmp
-            if tmp:
-                self.__selectedIndex.clear()
-                self.__selectedIndex = tmp
-                return self
-
-            # Raise an exception if nothing is found
-            raise ValueNotFoundError(f"Couldn't find any records")
-        
-
-        
-        
-
-
-    
     # This method is used to delete a record or a table
     def delete(self):
         "This method is used to delete a record or a table."
