@@ -26,14 +26,16 @@ DB = JsonDatabase(Find("ReAnime"))
 
 
 # DB.select("Recent")
-# DB.add("Name","Dad")
+# DB.add("Name","DON")
 # DB.add("age","20")
 # DB.flush()
 
 
 DB.select("Recent")
-DB.all("Name","EXTRA")
-DB.delete()
+DB.all("age","20")
+DB.where("Name","Joshua",False)
+DB.update('age','15')
+print(DB.get("Name"))
 
 # DB.select("Recent")
 # DB.all("age","20")

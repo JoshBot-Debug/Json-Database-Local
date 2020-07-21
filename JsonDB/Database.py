@@ -1,4 +1,4 @@
-from JsonDB.jdbException.jdbException import TableNotFoundError, TableAlreadyExistsError, ValueNotUniqueError
+from JsonDB.jdbException.jdbException import TableNotFoundError, TableAlreadyExistsError
 
 class Database(object):
 

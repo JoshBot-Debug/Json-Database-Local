@@ -78,19 +78,29 @@ class JsonDatabase:
 
     # This method is used to select a single table in the Database()
     def select(self,Table: str):
-        "This method is used to select a single table in the Database()"
+        "This method is used to select a single table in the Database(), it returns all the records in the table."
+
+        # Always have to clear the selectedIndex array before updatingit
+        self.__selectedIndex.clear()
 
         self.__selectedTableValues = self.__database._select(Table)
 
         if self.__selectedTableValues:
             self.__selectedTable = Table
-            
+
+            if not isinstance(self.__selectedTableValues,bool) :
+                self.__selectedIndex.clear()
+                self.__selectedIndex = list(self.__selectedTableValues.keys())
+
         return self
 
 
     # This method will stop at the first index that finds a matching key and value
     def one(self,Key: str,Value: str):
         "This method will stop at the first index that finds a matching key and value"
+        
+        # Always have to clear the selectedIndex array before updatingit
+        self.__selectedIndex.clear()
 
         for index in self.__selectedTableValues:
             if self.__selectedTableValues[index][Key] == Value:
@@ -104,6 +114,9 @@ class JsonDatabase:
     # This method will get every index that finds a matching key and value
     def all(self,Key: str,Value: str):
         "This method will get every index that finds a matching key and value"
+
+        # Always have to clear the selectedIndex array before updatingit
+        self.__selectedIndex.clear()
 
         for index in self.__selectedTableValues:
             if self.__selectedTableValues[index][Key] == Value:
@@ -226,24 +239,41 @@ class JsonDatabase:
 
 
     # This method is used to find a record after selecting multiple records using the all() method.
-    def where(self, Key: str, Value: str):
-        """This method is used to find a record after selecting multiple records using the all() method.
+    def where(self, Key: str, Value: str, Condition: bool):
+        """This method is used to find a record after selecting multiple records using the all() or select() method.
         Condition: is True by default, if set to False, it will find all the keys where the value is not
         what the given value is.
         """
-        
-        # for index in the selected index(s) __selectedIndex
-        for Index in self.__selectedIndex:
-            # If we find a matching value return clear __selectedIndex
-            # and append the index of the matching value.
-            if self.__selectedTableValues[Index][Key] == Value:
-                self.__selectedIndex.clear()
-                self.__selectedIndex.append(Index)
-                return self
+
+        if Condition:
+            # for index in the selected index(s) __selectedIndex
+            for Index in self.__selectedIndex:
+                # If we find a matching value return clear __selectedIndex
+                # and append the index of the matching value.
+                if self.__selectedTableValues[Index][Key] == Value:
+                    self.__selectedIndex.clear()
+                    self.__selectedIndex.append(Index)
+                    return self
 
             # If we find no matching value, raise an exception
             raise ValueNotFoundError(f"Couldn't find '{Value}' in the selected key '{Key}'")
 
+        if not Condition:
+            tmp = []
+            # for index in the selected index(s) __selectedIndex
+            for Index in self.__selectedIndex:
+                # If we find a matching value return clear __selectedIndex
+                # and append the index of the matching value.
+                if self.__selectedTableValues[Index][Key] != Value:
+                    tmp.append(Index)
+
+            if tmp:
+                self.__selectedIndex.clear()
+                self.__selectedIndex = tmp
+                return self
+        
+        # If we find no matching value, raise an exception
+        raise ValueNotFoundError(f"Couldn't find any records")
 
     # This method is used to delete a record or a table
     def delete(self):
