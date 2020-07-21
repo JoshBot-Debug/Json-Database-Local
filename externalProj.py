@@ -10,14 +10,14 @@ DB = JsonDatabase(Find("ReAnime"))
 # creator.keys(["Name"])
 # DB.create(creator)
 
-DB.select("Recent")
-DB.unique("Name")
+# DB.select("Recent")
+# DB.unique("Name")
 
-names = ["Joshua","Hannah","Elsa"]
+# names = ["Joshua","Hannah","Elsa"]
 
-for name in names:
-    DB.add("Name",name)
-    DB.flush()
+# for name in names:
+#     DB.add("Name",name)
+#     DB.flush()
 
 
 # DB.select("Recent")
