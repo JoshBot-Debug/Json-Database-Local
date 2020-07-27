@@ -5,7 +5,7 @@ __license__ = "GNU General Public License v3.0"
 __version__ = "1.0.1"
 __maintainer__ = "Joshua Joseph Myers"
 __email__ = "JoshuaMyersWebDev@gmail.com"
-__status__ = "Production"
+__status__ = "Development"
 
 import os
 import pathlib
