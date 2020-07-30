@@ -187,6 +187,9 @@ class JsonDatabase:
     def add(self, Key: str,Value: str):
         "This method is used to create a new key in a selected table"
 
+        if not self.__selectedTable:
+            raise Exception("You have to select a table first, use JsonDB().select()")
+
         listOfRows = self.__database._getTableAndRows()[self.__selectedTable]
 
         if Key not in listOfRows:
